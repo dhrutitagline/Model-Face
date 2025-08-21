@@ -1,0 +1,43 @@
+# =========================
+# Python
+# =========================
+__pycache__/
+*.py[cod]
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+*.pkl
+*.pt
+*.pth
+*.ckpt
+
+# =========================
+# Virtual Environment
+# =========================
+.env
+.venv
+env/
+venv/
+ENV/
+.ipynb_checkpoints/
+
+# =========================
+# OS / Editor
+# =========================
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# =========================
+# Project Specific
+# =========================
+weights/
+outputs/
+uploads/
+*.log
