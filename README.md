@@ -23,7 +23,7 @@ Built with **Gradio UI** for easy usage.
 
 ### 1️⃣ Clone the repository
 ```bash
-git clone https://github.com/your-username/FaceModel-Enhancer.git
+git clone https://github.com/dhrutitagline/FaceModel-Enhancer.git
 cd FaceModel-Enhancer
 ```
 
