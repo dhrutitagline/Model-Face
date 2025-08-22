@@ -24,7 +24,7 @@ Built with **Gradio UI** for easy usage.
 ### 1️⃣ Clone the repository
 ```bash
 git clone https://github.com/dhrutitagline/Model-Face.git
-cd FaceModel-Enhancer
+cd Model-Face
 ```
 
 ### 2️⃣ Create virtual environment
