@@ -1,3 +1,8 @@
+import torchvision.transforms.functional as F
+import sys
+sys.modules['torchvision.transforms.functional_tensor'] = F
+
+
 import os
 import cv2
 import numpy as np
@@ -21,18 +26,18 @@ if not os.path.exists("weights/RealESRGAN_x2plus.pth"):
     os.system("curl -L -o weights/RealESRGAN_x2plus.pth https://github.com/xinntao/Real-ESRGAN/releases/download/v0.2.1/RealESRGAN_x2plus.pth")
 
 # ==============================
-# 📌 Load GFPGAN (GPU)
+# 📌 Load GFPGAN (CPU)
 # ==============================
 gfpganer = GFPGANer(
     model_path="weights/GFPGANv1.4.pth",
     upscale=1,
     arch="clean",
     channel_multiplier=2,
-    device="cuda"   # 👈 use GPU
+    device="cpu"
 )
 
 # ==============================
-# 📌 Load RealESRGAN (GPU)
+# 📌 Load RealESRGAN (CPU)
 # ==============================
 model = RRDBNet(
     num_in_ch=3, num_out_ch=3, num_feat=64,
@@ -46,8 +51,8 @@ upscaler = RealESRGANer(
     tile=0,
     tile_pad=10,
     pre_pad=0,
-    half=True,      # 👈 use FP16 on GPU (faster + less memory)
-    device="cuda"   # 👈 use GPU
+    half=False,
+    device="cpu"
 )
 
 # ==============================
@@ -56,8 +61,8 @@ upscaler = RealESRGANer(
 def beautify(image):
     input_h, input_w = image.shape[:2]
 
-    # No need to resize aggressively on GPU, but keep for safety
-    max_size = 1500
+    # Step 0: Resize very large inputs (for CPU speed)
+    max_size = 1000
     if max(input_h, input_w) > max_size:
         scale = max_size / max(input_h, input_w)
         image = cv2.resize(image, (int(input_w * scale), int(input_h * scale)))
@@ -73,7 +78,7 @@ def beautify(image):
     # Step 2: Super-resolution with RealESRGAN
     restored_img, _ = upscaler.enhance(restored_img, outscale=2)
 
-    # Step 3: Skin smoothing + iris brightening
+    # Step 3: Skin smoothing + iris brightening (MediaPipe)
     mp_face = mp.solutions.face_mesh.FaceMesh(
         static_image_mode=True,
         refine_landmarks=True
@@ -114,8 +119,8 @@ demo = gr.Interface(
     fn=beautify,
     inputs=gr.Image(type="numpy", label="Upload a Face"),
     outputs=gr.Image(type="numpy", label="Enhanced Face"),
-    title="✨ Model Face Enhancer (GPU)",
-    description="Enhances faces using GFPGAN + RealESRGAN + MediaPipe for a model-like look. (Runs on GPU 🚀)"
+    title="✨ Model Face Enhancer (Male/Female)",
+    description="Enhances faces using GFPGAN + RealESRGAN + MediaPipe for a model-like look."
 )
 
 if __name__ == "__main__":

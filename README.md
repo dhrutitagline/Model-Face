@@ -59,8 +59,8 @@ Upload an image → Get enhanced face.
 ### 📂 Project Structure
 ```bash
 FaceModel-Enhancer/
-│── face_enhancer_cpu.py   # CPU version
-│── face_enhancer_gpu.py   # GPU version
+│── Model_face_cpu.py   # CPU version
+│── Model_face_gpu.py   # GPU version
 │── requirements.txt       # Dependencies
 │── README.md              # Project documentation
 │── .gitignore             # Ignore unnecessary files
