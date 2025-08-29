@@ -41,12 +41,12 @@ pip install -r requirements.txt
 ### 🖼️ Usage
 #### Run on CPU
 ```bash
-python face_enhancer_cpu.py
+python Model_face_cpu.py
 ```
 
 #### Run on GPU
 ```bash
-python face_enhancer_gpu.py
+python Model_face_gpu.py
 ```
 
 #### Once started, Gradio will launch a web UI:
